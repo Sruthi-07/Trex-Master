@@ -33,9 +33,10 @@ function preload(){
   restartImage = loadImage("restart.png");
   trex_collided = loadAnimation("trex_collided.png");
   
-  //jumpSound = loadSound("jump.mp3");
-  //dieSound = loadSound("die.mp3");
-  //checkPointSound = loadSound("checkPoint.mp3");
+  //loading sounds
+  jumpSound = loadSound("jump.mp3");
+  dieSound = loadSound("die.mp3");
+  checkPointSound = loadSound("checkPoint.mp3");
 }
 
 function setup() {
@@ -81,12 +82,14 @@ function draw() {
   
   if(keyDown("space")&&(trex.y>=159)) {
     trex.velocityY = -13;
-    //playSound("jump.mp3");
+    //playing jump sound when space is pressed
+    playSound("jump.mp3");
   }
-    
-  //if(frameCount % 100 === 0){
-    //playSound("checkPoint.mp3");
-  //}
+   
+  //play sound at check point
+  if(frameCount % 100 === 0){
+    playSound("checkPoint.mp3");
+  }
   
   trex.velocityY = trex.velocityY + 0.8
   
@@ -105,6 +108,8 @@ function draw() {
   }
   
   if(gameState === END){
+    //play die sound when gameState is end
+    playSound("die.mp3");
     gameOver.visible = true;
     restart.visible = true;
     ground.velocityX = 0;
@@ -114,7 +119,6 @@ function draw() {
     trex.changeAnimation("collided",trex_collided);
     obstaclesGroup.setLifetimeEach(-1);
     cloudsGroup.setLifetimeEach(-1);
-    //playSound("die.mp3");
     if(mousePressedOver(restart)){
       reset();
     }
